@@ -1,0 +1,40 @@
+/* Estilos de las tarjetas con juegos */
+
+.card__juego {
+    transition: all 1s ease; /* Transición para hacer la imagen un poco más grande */
+
+    /* Es necesario que el contenedor de la imagen sea relativo para que aparezca texto 
+    encima de la imagen */
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+}
+
+.card__juego:hover {
+    /* cursor: pointer; */
+    transform: scale(1.1);
+}
+
+/* Texto con el nombre del juego que aparece al pasar el ratón por encima de la tarjeta */
+.image-hover-text {
+    position: absolute;
+    bottom: 0; /* El texto no se muestra, tiene opacidad 0 */
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.fondo_oscuro {
+    background: black; 
+}
+
+.card__juego:hover:hover .image-hover-text {
+    opacity: 1; /* Ex texto se muestra, tiene opacidad 1 */
+}
+
+.no_subrayado {
+    text-decoration: none;
+}

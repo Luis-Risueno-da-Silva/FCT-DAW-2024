@@ -1,0 +1,19 @@
+body {
+    background-color: #16181C;
+    color: white;
+    font-family: Roboto;
+}
+
+.title {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.subtitle {
+    text-align: center;
+    color: #BADEFC;
+}
+
+.centrar {
+    text-align: center;
+}

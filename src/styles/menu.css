@@ -1,0 +1,16 @@
+.nav_item_style {
+    text-decoration: none;
+    color: gray;
+}
+
+.nav_item_style:hover {
+    text-decoration: underline;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+  
