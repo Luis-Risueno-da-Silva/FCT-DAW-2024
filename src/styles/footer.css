@@ -1,0 +1,33 @@
+.miFooter {
+    width: 100%;
+    background-color: #242832;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+/* Información de la página */
+.div_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.info_link {
+    text-decoration: none;
+    color: gray;
+}
+
+.info_link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Iconos de redes sociales */
+.icono_link {
+    color: gray;
+}
+
+.icono_link:hover {
+    color: white;
+}

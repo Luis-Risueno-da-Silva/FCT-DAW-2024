@@ -14,6 +14,9 @@ import CardPopGame from "./CardPopGame.jsx";
 // Importar tarjeta de juego próximo
 import CardProxGame from "./CardProxGame.jsx";
 
+// El footer de la página
+import Footer from "./Footer.jsx";
+
 const Inicio = () => {
 
   // Obtener los 5 juegos más populares
@@ -39,7 +42,7 @@ const Inicio = () => {
 
       {/* Los juegos más populares del último año */}
 
-      <p className="centrar mt-5 fs-3">Los juegos con mejor rating del último año</p>
+      <p className="text-center mt-5 fs-3">Los juegos con mejor rating del último año</p>
 
       <div className="container d-flex justify-content-center mt-1">
         <div className="row row-cols-2 row-cols-lg-5 g-4 justify-content-center">
@@ -58,9 +61,9 @@ const Inicio = () => {
 
       {/* Juegos que saldrán proximamente */}
 
-      <p className="centrar mt-5 fs-3">Próximos lanzamientos</p>
+      <p className="text-center mt-5 fs-3">Próximos lanzamientos</p>
 
-      <div className="container d-flex justify-content-center mt-1 mb-2">
+      <div className="container d-flex justify-content-center mt-1 mb-4">
         <div className="row row-cols-1 row-cols-lg-3 g-4 justify-content-center">
 
             {/* Las tarjetas de los juegos futuros */}
@@ -72,6 +75,8 @@ const Inicio = () => {
       </div>
 
       {/* Fin de juegos que saldrán proximamente */}
+
+      <Footer />
 
     </div>
   );

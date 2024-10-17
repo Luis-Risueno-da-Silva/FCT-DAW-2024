@@ -10,6 +10,9 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 // Importar js de bootstrap
 import "../node_modules/bootstrap/dist/js/bootstrap.min.js"
 
+// Importar iconos de bootstrap
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 // Importar Componentes
 import Layout from './components/Layout'
 import Inicio from './components/Inicio'
@@ -34,7 +37,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 {/* La ruta de juegos */}
                 <Route path='/juegos' element={<Juegos />}>
                     <Route path='/juegos' element={<AllJuegos />} />
-                    <Route path=':juegoId' element={<UnVideojuego />}/>
+                    <Route path=':slug' element={<UnVideojuego />}/>
                 </Route>
 
             </Route>

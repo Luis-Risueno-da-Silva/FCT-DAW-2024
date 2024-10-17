@@ -29,7 +29,7 @@ const AllJuegos = () => {
       </div>
 
       {/* Contenedor de botones para cambiar de página */}
-      <div className="d-flex justify-content-between botones__container mt-4">
+      <div className="d-flex justify-content-between botones__container mt-4 mb-4">
         <button
           type="button"
           className="btn btn-primary"
