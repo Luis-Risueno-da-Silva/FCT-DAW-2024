@@ -1,13 +1,35 @@
+.titulo_buscador {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formulario {
+    margin: 0 auto;
+}
+
+.buscador {
+    margin-left: 10px;
+}
+
 .container_juego {
     width: 100%;
-    display: flex;
+    /* display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: center; */
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "imagen_rating" 
+    "info_juego"
+    ;
 }
 
 /* Imagen del juego y su rating */
 .imagen_rating {
-    width: 50%;
+    grid-area: imagen_rating;
+    /* width: 50%; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -38,7 +60,7 @@
     margin-right: 10px;
 }
 
-.lista_rating {
+.lista_sin_estilo {
     list-style: none;
 }
 
@@ -50,5 +72,48 @@
 
 /* Información del juego */
 .info_juego {
-    width: 50%;
+    grid-area: info_juego;
+    /* width: 50%; */
+}
+
+.descripcion {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.div_plataformas_generos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.div_plataformas {
+    width: 200px;
+}
+
+.div_generos {
+    width: 200px;
+}
+
+/* Breakpoints */
+@media (min-width: 768px) {
+    .buscador {
+        width: 400px;
+        margin-left: 0px;
+    }
+
+    .container_juego {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+        "imagen_rating info_juego"
+    }
+
+    .titulo_buscador {
+        /* border: 1px solid red; */
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
 }

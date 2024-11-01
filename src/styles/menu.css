@@ -13,4 +13,13 @@
     width: 100%;
     z-index: 1000;
 }
-  
+
+.enlace {
+    text-decoration: none;
+    color: gray;
+}
+
+.enlace:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

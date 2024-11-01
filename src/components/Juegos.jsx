@@ -32,10 +32,10 @@ const Juegos = () => {
   };
 
   return (
-    <div className="w-100">
+    <div className="div_juegos">
       {/* Título de la página y un buscador de juegos */}
-      <div className="titulo_buscador w-100">
-        <h1 className="ms-3 titulo">Baúl de juegos</h1>
+      <div className="titulo_buscador">
+        <h1 className="ms-3 text-center titulo">Baúl de juegos</h1>
 
         {/* Para buscar juegos */}
         <form className="d-flex formulario">
@@ -55,7 +55,9 @@ const Juegos = () => {
 
       <Outlet />
 
-      <Footer />
+      <div className="w-100">
+        <Footer />
+      </div>
 
     </div>
   );

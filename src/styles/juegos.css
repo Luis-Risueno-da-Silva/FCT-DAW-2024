@@ -4,18 +4,24 @@ body{
     width: 100%;
 }
 
+.div_juegos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .titulo_buscador {
-    /* border: 1px solid red; */
     width: 100%;
     margin-top: 60px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .buscador {
-    width: 250px;
+    width: 400px;
     height: 50px;
 }
 

@@ -63,8 +63,8 @@ const Inicio = () => {
 
       <p className="text-center mt-5 fs-3">Próximos lanzamientos</p>
 
-      <div className="container d-flex justify-content-center mt-1 mb-4">
-        <div className="row row-cols-1 row-cols-lg-3 g-4 justify-content-center">
+      <div className="container d-flex flex-wrap justify-content-center mt-1 mb-4">
+        <div className="row row-cols-2 row-cols-lg-3 g-4 justify-content-center">
 
             {/* Las tarjetas de los juegos futuros */}
             {proxGamesResults.map((proxGame) => 

@@ -19,6 +19,9 @@ import Inicio from './components/Inicio'
 import Juegos from './components/Juegos.jsx'
 import UnVideojuego from './components/UnVideojuego.jsx'
 import AllJuegos from './components/AllJuegos.jsx';
+import RegistrarUsuario from './components/RegistrarUsuario.jsx'
+import IniciarSesion from './components/IniciarSesion.jsx'
+import Usuario from './components/Usuario.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
@@ -39,6 +42,17 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                     <Route path='/juegos' element={<AllJuegos />} />
                     <Route path=':slug' element={<UnVideojuego />}/>
                 </Route>
+
+                {/* La ruta de iniciar sesión */}
+
+                {/* La ruta de registrar un usuario */}
+                <Route path='/registrarUsuarios' element={<RegistrarUsuario />} />
+
+                {/* La ruta de iniciar sesión */}
+                <Route path='/iniciarSesion' element={<IniciarSesion />} />
+
+                {/* La ruta del usuario */}
+                <Route path='/usuario' element={<Usuario />} />
 
             </Route>
 

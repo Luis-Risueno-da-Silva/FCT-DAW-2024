@@ -9,7 +9,12 @@ import useOneGame from "../services/hooks/useOneGame";
 // Estilos de la página
 import "../styles/UnVideojuego.css";
 
+// Estas funciones las utilizo para acortar la descripción
+// y mostrar la parte en español (si existe)
+import acortarDescripcionEspañola from "../js/acortarDescripcionEspañola";
+
 const UnVideojuego = () => {
+
   let params = useParams();
 
   // console.log(params)
@@ -22,9 +27,61 @@ const UnVideojuego = () => {
 
   console.log(videojuego);
 
+  /*
+   * Ratings del juego:
+   * Excepcional
+   * Recomendado
+   * Meh
+   * Saltear (no recomendado)
+   */
   let ratings = videojuego.ratings || [];
 
   // console.log(ratings)
+
+  // Calificación por edades (ESRB)
+  let calificacionEdades = videojuego.esrb_rating || "";
+
+  // console.log(calificacionEdades.name)
+
+  // Publishers del videojuego
+  let publishers = videojuego.publishers || [];
+
+  // console.log(publishers);
+
+  // Descripción del juego
+  let descripcion = videojuego.description_raw || "Descripción no disponible";
+
+  // console.log(descripcion)
+
+  // Descripción en español del juego
+  let descripcionEspañola = acortarDescripcionEspañola(descripcion, "Español");
+
+  // console.log(descripcionEspañola)
+
+  // Plataformas en las que ha salido el juego
+  let plataformas = videojuego.platforms || [];
+
+  // console.log(plataformas);
+
+  // Géneros del juego
+  let generos = videojuego.genres || [];
+
+  // console.log(generos);
+
+  // Para poner los ratings en español
+  let ratingsEspañol = ["Excepcional", "Recomendado", "Meh", "No jugar"];
+  let index = 0;
+
+  // Para poner las calificaciones por edades en formato de PEGI
+  let calificacionEdadesEspañol = [
+    "PEGI 3",
+    "PEGI 7",
+    "PEGI 7",
+    "PEGI 12",
+    "PEGI 18",
+    "PEGI 18",
+    "PEGI no disponible",
+  ];
 
   return (
     <div>
@@ -52,10 +109,11 @@ const UnVideojuego = () => {
 
             {/* Rating de los jugadores */}
             <p className="text-center text-info">Rating de los jugadores</p>
-            <ul className="lista_rating borde_rating pb-2">
+            <ul className="lista_sin_estilo borde_rating pb-2">
               {ratings.map((rating) => (
                 <li key={rating.id}>
-                  {rating.title.toUpperCase()} --- {rating.count}
+                  {ratingsEspañol[index]} --- {rating.count}
+                  {index++}
                 </li>
               ))}
             </ul>
@@ -78,7 +136,57 @@ const UnVideojuego = () => {
 
         {/* Información del juego */}
         <div className="info_juego">
-          <p className="fs-2 text-center">{videojuego.name}</p>
+          {/* Nombre del videojuego */}
+          <p className="fs-2 text-center text-primary">
+            <strong>{videojuego.name || "El videojuego no existe"}</strong>
+          </p>
+          {/* Rating según la ESRB */}
+          <p className="text-center">
+            Calificación por edades:{" "}
+            <strong>
+              {calificacionEdadesEspañol[calificacionEdades.id] ||
+                "PEGI no disponible"}
+            </strong>
+          </p>
+          {/* Fecha de lanzamiento y publishers del videojuego */}
+          <p className="text-center">
+            Fecha de lanzamiento:{" "}
+            <strong>{videojuego.released || "n/a"}</strong> Publishers: &nbsp;
+            {publishers.map((publisher) => (
+              <strong key={publisher.id}>{publisher.name}. </strong>
+            ))}
+          </p>
+          {/* Descripción del videojuego */}
+          <p className="descripcion">
+            {descripcionEspañola || videojuego.description_raw}
+          </p>
+
+          <hr />
+
+          {/* Plataformas en las que ha salido el juego y géneros */}
+          <div className="div_plataformas_generos">
+            {/* Plataformas en las que el videojuego está */}
+            <div className="div_plataformas">
+              <p className="text-center text-primary">Lanzado en: </p>
+              {plataformas.map((plataforma) => (
+                <p key={plataforma.platform.id} className="text-center">
+                  {plataforma.platform.name}
+                </p>
+              ))}
+            </div>
+            {/* Fin de las plataformas en las que el juego se encuentra */}
+
+            {/* Géneros del juego */}
+            <div className="div_generos">
+              <p className="text-center text-primary">Géneros:</p>
+              {generos.map((genero) => (
+                <p key={genero.id} className="text-center">
+                  {genero.name}
+                </p>
+              ))}
+            </div>
+            {/* Fin de los géneros del juego */}
+          </div>
         </div>
         {/* Fin de la información del juego */}
       </div>

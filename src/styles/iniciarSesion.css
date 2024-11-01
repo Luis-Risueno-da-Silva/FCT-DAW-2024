@@ -1,0 +1,17 @@
+.title {
+    margin-top: 60px;
+}
+
+.mi_form {
+    display: flex;
+    justify-content: center; 
+    height: 100vh;            
+}
+
+.mi_input {
+    width: 400px;
+}
+
+.mi_alert {
+    width: 400px;
+}
