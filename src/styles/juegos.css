@@ -29,15 +29,6 @@ body{
     height: 50px;
 }
 
-/* Contenedor de juegos */
-.juegos_container {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
 .imagen_tarjeta {
     width: 270px;
     height: 150px
@@ -45,11 +36,26 @@ body{
 
 /* ************************* */
 
-/* Contenedor de botones */
+/* Contenedor botones para ir a páginas */
 .botones__container {
-    /* border: 1px solid red; */
-    width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.boton__pagina {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 50%;
+    background-color: #242832;
+}
+
+.boton__pagina:hover {
+    cursor: pointer;
+    color: red;
 }
 
 /* ****************************** */

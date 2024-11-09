@@ -95,6 +95,12 @@
     width: 200px;
 }
 
+/* Modal que tiene un formulario */
+.modal_trigger {
+   width: 50%;
+   margin: 0 auto;
+}
+
 /* Breakpoints */
 @media (min-width: 768px) {
     .buscador {

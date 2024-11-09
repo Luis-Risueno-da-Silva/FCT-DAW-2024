@@ -11,8 +11,10 @@ import comprobarLocalStorage from "../js/comprobarLocalStorage";
 import cerrarSesion from "../js/cerrarSesion";
 
 const Menu = () => {
+
+  // Comprobar que haya una sesión iniciada
   let dataLocalStorage = comprobarLocalStorage();
-  console.log(dataLocalStorage);
+  // console.log(dataLocalStorage);
 
   return (
     <div>
@@ -56,6 +58,7 @@ const Menu = () => {
                     {dataLocalStorage}
                   </Link>
 
+                  {/* Cerrar la sesión actual */}
                   <a className="enlace" onClick={cerrarSesion}>
                     Cerra sesión
                   </a>
@@ -67,12 +70,11 @@ const Menu = () => {
                     Iniciar sesión
                   </Link>
 
+                  {/* Para ir a Registrar Usuarios */}
                   <Link to={"/registrarUsuarios"} className="nav_item_style">
                     Registarse
                   </Link>
                 </li>
-
-                // Para ir a Registrarse
                 
               )}
             </ul>

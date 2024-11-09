@@ -42,7 +42,7 @@ const Inicio = () => {
 
       {/* Los juegos más populares del último año */}
 
-      <p className="text-center mt-5 fs-3">Los juegos con mejor rating del último año</p>
+      <p className="text-center mt-5 fs-4">Los juegos con mejor rating del último año</p>
 
       <div className="container d-flex justify-content-center mt-1">
         <div className="row row-cols-2 row-cols-lg-5 g-4 justify-content-center">

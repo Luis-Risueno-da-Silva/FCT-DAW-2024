@@ -10,7 +10,6 @@ import useFormReg from "../services/hooks/useFormRegistro";
 import verificarUsuario from "../queries/verificarUsuario";
 import verificarCorreo from "../queries/verificarCorreo";
 import registrarUsuario from "../queries/registrarUsuario";
-import crearTablaUsuario from "../queries/crearTablaUsuario";
 
 // Función
 import crearLocalStorage from "../js/crearLocalStorage";
@@ -29,7 +28,6 @@ const RegistrarUsuario = () => {
 
   // Comprobar errores en el formulario
   const comprobarErrores = () => {
-    // Si hay errores, no hace falta comprobar los campos del formulario.
     setTimeout(() => {
       let errores = handleErrors();
 
@@ -103,28 +101,11 @@ const RegistrarUsuario = () => {
       let respuesta = await registrarUsuario(formDataRegistro);
 
       if (respuesta == true) {
-        consultaTablaUsuario();
-      }else {
-        errorPersonalizado("Ocurrió un error al registrar el usuario")
-      }
-    };
-
-    // Crear la tabla con el nombre del usuario
-    const consultaTablaUsuario = async () => {
-      const formData = new FormData();
-      formData.append("nombre", datosForm.nombre)
-
-      // Se espera a que la función termine
-      let respuesta = await crearTablaUsuario(formData);
-
-      if (respuesta == true) {
-        // Se guada información del usuario en el localStorage
         crearLocalStorage(datosForm.nombre)
       }else {
         errorPersonalizado("Ocurrió un error al registrar el usuario")
       }
-
-    }
+    };
 
     // Llamar a la función "obtenerRespuestaUsuario"
     obtenerRespuestaUsuario();

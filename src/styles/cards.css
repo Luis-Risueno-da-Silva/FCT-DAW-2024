@@ -8,8 +8,11 @@
     position: relative;
     width: 100%;
     max-width: 300px;
+
+    grid-area: card__juego;
 }
 
+/* Hacer */
 .card__juego:hover {
     /* cursor: pointer; */
     transform: scale(1.1);
@@ -31,10 +34,23 @@
     background: black; 
 }
 
-.card__juego:hover:hover .image-hover-text {
-    opacity: 1; /* Ex texto se muestra, tiene opacidad 1 */
-}
-
 .no_subrayado {
     text-decoration: none;
+}
+
+/* Breakpints */
+/* Mostrar el nombre del juego al pasar el ratón por encima de la tarjeta */
+@media (min-width: 769px) {
+
+    .title_game {
+        display: none;
+    }
+
+    .ocultar_en_portatil {
+        display: none;
+    }
+
+    .card__juego:hover:hover .image-hover-text {
+        opacity: 1; /* Ex texto se muestra, tiene opacidad 1 */
+    }
 }

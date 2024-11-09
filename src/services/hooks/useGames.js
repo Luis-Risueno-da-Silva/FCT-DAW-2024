@@ -19,23 +19,28 @@ const useGames = (pagina) => {
             setLoading(false); // Desactivar el estado de carga
         });
     };
-    // Cuando se está cargando la consulta, los botones están desactivados.
-    // Cuando la consulta se ha cargado, los botones vuelven a activarse.
+
+    // Array del 1 al 10
+    const paginas = Array.from({ length: 10 }, (_, i) => i + 1); 
 
 
     // Página anterior de resultados
     // No se puede acceder a una página de resultados inferior a 1
-    const prevPage = () => setPage(page => Math.max(page - 1, 1));
+    // const prevPage = () => setPage(page => Math.max(page - 1, 1));
 
     // Página siguiente de juegos
-    const nextPage = () => setPage(page => page + 1);
+    // const nextPage = () => setPage(page => page + 1);
+
+    const irAPagina = (pagina) => {
+        setPage(pagina)
+    }
 
     // Ejecutar "obtenerJuegos" al cargar la página y
     // al cambiar el valor de "page".
     useEffect(obtenerJuegos, [page])
 
     // Devolver juegos y funciones
-    return {games, prevPage, nextPage, loading};
+    return {games, paginas, page, irAPagina};
 
 }
 

@@ -1,0 +1,16 @@
+/* Contenedor de las tarjetas */
+.grid-container {
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+}
+
+/* Se deja de mostrar el nombre del juego sin 
+necesidad de pasar el ratón por encima */
+@media (min-width: 769px) {
+    .desaparecer_tablet {
+        display: none;
+    }
+}

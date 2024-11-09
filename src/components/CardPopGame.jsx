@@ -13,7 +13,8 @@ const CardPopGame = ({ popGame }) => {
 
         {/* Rating del juego */}
         <div className="card-body">
-          <p className="card-text centrar">
+          <p className="title_game text-center">{popGame.name}</p>
+          <p className="card-text centrar text-center">
             Rating: <strong>{popGame.rating}/5</strong>
           </p>
         </div>

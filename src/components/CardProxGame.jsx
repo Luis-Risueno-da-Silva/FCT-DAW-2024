@@ -13,6 +13,7 @@ const CardProxGame = ({ proxGame }) => {
 
         {/* La fecha de lanzamiento del juego */}
         <div className="card-body">
+          <p className="title_game text-center">{proxGame.name}</p>
           <p className="card-text">
             Fecha de lanzamiento: <strong>{proxGame.released}</strong>
           </p>

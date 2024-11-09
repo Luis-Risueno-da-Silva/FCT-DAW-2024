@@ -14,7 +14,7 @@ $stmt->bind_param("sss", $nombre, $correo_electronico, $contraseña_encriptada);
 
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "message" => "Registro insertado correctamente."]);
-}else {
+} else {
     echo json_encode(["success" => false, "message" => "Error al insertar: " . $stmt->error]);
 }
 
