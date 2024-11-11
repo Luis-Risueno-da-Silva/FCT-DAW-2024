@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Para obtener el nombre del juego
 import { useParams } from "react-router-dom";
@@ -116,7 +116,14 @@ const UnVideojuego = () => {
   let idUsuario;
 
   // Si el videojuego ya está en el perfil del usuario
-  let videojuegoPerfil = {};
+  const [videojuegoPerfil, setVideojuegoPerfil] = useState({
+    estado_juego: "",
+    nota_juego: 0,
+    reseña: "",
+    fecha_inicio: "",
+    fecha_finalizacion: "",
+    veces_jugado: 0,
+  });
 
   // Comprobar si el juego se encuentra en el perfil del usuario o no
   const comprobarUsuario = async () => {
@@ -151,17 +158,12 @@ const UnVideojuego = () => {
     formDataJuego.append("id_usuario", idUsuario);
     formDataJuego.append("id_juego", videojuego.id);
 
-    // console.log(
-    //   "Se va a buscar el juego con id: " +
-    //     videojuego.id +
-    //     " en el perfil del usuario con id: " +
-    //     idUsuario
-    // );
+    let respuesta = await obtenerJuegoPerfil(formDataJuego);
 
     // Comprobar que el videojuego exista en el perfil
-    videojuegoPerfil = await obtenerJuegoPerfil(formDataJuego);
+    setVideojuegoPerfil(respuesta);
 
-    console.log(videojuegoPerfil)
+    console.log(videojuegoPerfil);
 
     // if (videojuegoPerfil == false) {
     //   console.log("El juego no está en el perfil del usuario");
@@ -177,16 +179,14 @@ const UnVideojuego = () => {
   };
 
   // Comprobar errores del formulario
-  const comprobarErrores = () => {
-    setTimeout(() => {
-      let errores = handleErrors();
+  const comprobarErrores = async () => {
+    let errores = await handleErrors();
 
-      // console.log(errores)
+    // console.log(errores)
 
-      if (errores == false) {
-        enviarFormulario();
-      }
-    }, 2000);
+    if (errores == false) {
+      enviarFormulario();
+    }
   };
 
   // Enviar el formulario
@@ -435,7 +435,7 @@ const UnVideojuego = () => {
                       id="decimalInput"
                       placeholder="Con dos decimales, de 0 al 5"
                       name="nota"
-                      // value={videojuegoPerfil.nota_juego}
+                      // value={videojuegoPerfil.nota_juego || ""}
                       onChange={handleChange}
                     ></input>
                   </div>
@@ -451,6 +451,7 @@ const UnVideojuego = () => {
                       rows="3"
                       placeholder="Escribe aquí la reseña/comentario"
                       name="resena"
+                      // value={videojuegoPerfil.reseña || ""}
                       onChange={handleChange}
                     ></textarea>
                   </div>
@@ -483,6 +484,7 @@ const UnVideojuego = () => {
                       // value="{{ fechaActual }}"
                       name="fecha_fin"
                       onChange={handleChange}
+                      min={datosForm.fecha_inicio}
                       max={fechaFormateada}
                     ></input>
                   </div>
