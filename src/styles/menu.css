@@ -1,11 +1,12 @@
 .nav_item_style {
     text-decoration: none;
     color: gray;
+    gap: 1rem;
 }
 
 .nav_item_style:hover {
     text-decoration: underline;
-}
+} 
 
 .fixed-top {
     position: fixed;
@@ -17,9 +18,16 @@
 .enlace {
     text-decoration: none;
     color: gray;
+    gap: 1rem;
 }
 
 .enlace:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+@media (min-width: 992px) {
+    .ocultar {
+        display: none;
+    }
 }

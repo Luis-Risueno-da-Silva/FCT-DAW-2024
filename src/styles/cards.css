@@ -12,6 +12,11 @@
     grid-area: card__juego;
 }
 
+.card-img-top {
+    width: 100%;
+    height: 135px;
+}
+
 /* Hacer */
 .card__juego:hover {
     /* cursor: pointer; */

@@ -19,7 +19,7 @@ import useFormModal from "../services/hooks/useFormModal";
 // Consultas
 import obtenerIdUsuario from "../queries/obtenerIdUsuario";
 import añadirJuegoAlPerfil from "../queries/añadirJuegoAlPerfil";
-import obtenerJuegoPerfil from "../queries/obtenerJuegoPerfil";
+import verificarJuegoPerfil from "../queries/verificarJuegoPerfil";
 import modificarJuegoPerfil from "../queries/modificarJuegoPerfil";
 
 const UnVideojuego = () => {
@@ -158,7 +158,7 @@ const UnVideojuego = () => {
     formDataJuego.append("id_usuario", idUsuario);
     formDataJuego.append("id_juego", videojuego.id);
 
-    let respuesta = await obtenerJuegoPerfil(formDataJuego);
+    let respuesta = await verificarJuegoPerfil(formDataJuego);
 
     // Comprobar que el videojuego exista en el perfil
     setVideojuegoPerfil(respuesta);

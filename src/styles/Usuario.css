@@ -1,3 +1,53 @@
 .title {
     margin-top: 60px;
 }
+
+/* Conteendor de la tabla */
+.container_tabla {
+    width: 80%;
+    margin:  0 auto;
+}
+
+/* Imagen del juego en la tabla */
+.imagen_tabla {
+    width: 100px;
+    height: 100px;
+}
+
+/* Contenedor del icono de bocadillo y la reseña */
+.icon-container {
+    position: relative; /* El contenedor del texto debe de ser de posición relativa */ 
+    display: inline-block;
+}
+
+/* El texto que aparece cuando el cursor se pasa por encima del icono */
+.tooltip-text {
+    visibility: hidden;
+    width: 400px;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    position: absolute; /* El texto debe de ser de posición absoluta */
+    top: -40px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Cuano se pasa el cursor por encima del icono */
+.icon-container:hover .tooltip-text {
+    visibility: visible; /* Aparece el texto */
+    opacity: 1; /* Opacidad 1, para que se pueda ver bien */
+}
+
+/* Iconos de la página */
+.icon {
+    font-size: 24px;
+}
+
+.icon:hover {
+    cursor: pointer;
+}

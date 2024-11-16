@@ -10,8 +10,9 @@ import "../styles/menu.css";
 import comprobarLocalStorage from "../js/comprobarLocalStorage";
 import cerrarSesion from "../js/cerrarSesion";
 
-const Menu = () => {
+import "../js/menuResponsivo.js";
 
+const Menu = () => {
   // Comprobar que haya una sesión iniciada
   let dataLocalStorage = comprobarLocalStorage();
   // console.log(dataLocalStorage);
@@ -58,9 +59,11 @@ const Menu = () => {
                     {dataLocalStorage}
                   </Link>
 
+                  <br className="ocultar" />
+
                   {/* Cerrar la sesión actual */}
                   <a className="enlace" onClick={cerrarSesion}>
-                    Cerra sesión
+                  <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                   </a>
                 </li>
               ) : (
@@ -70,12 +73,13 @@ const Menu = () => {
                     Iniciar sesión
                   </Link>
 
+                  <br className="ocultar" />
+
                   {/* Para ir a Registrar Usuarios */}
                   <Link to={"/registrarUsuarios"} className="nav_item_style">
                     Registarse
                   </Link>
                 </li>
-                
               )}
             </ul>
           </div>

@@ -1,15 +1,46 @@
 import React from "react";
 
+// Cuando no hay imagen
+import imagenNoEncontrada from "../assets/images/imagenNoEncontrada.jpg";
+
 const CardPopGame = ({ popGame }) => {
+  // Todos los tags del juego
+  let tags = popGame.tags;
+  // console.log(tags)
+
+  // Tags que vaneo
+  let tagsBaneados = ["nsfw", "hentai", "erotic"];
+
+  // Se censura la imagen o no
+  let censurar;
+
+  for (let i = 0; i < tags.length; i++) {
+    for (let j = 0; j < tagsBaneados.length; j++) {
+      if (tagsBaneados[j] == tags[i].slug) {
+        censurar = true;
+      }
+    }
+  }
+
   return (
     <div className="col m-2">
       <div className="card card__juego">
         {/* Imagen del juego */}
-        <img
-          src={popGame.background_image} onerror={"../assets/images/imagenNoEncontrada.jpg"}
-          className="card-img-top"
-          alt={popGame.name}
-        ></img>
+        {!censurar ? (
+          <img
+            src={popGame.background_image}
+            onerror={imagenNoEncontrada}
+            className="card-img-top"
+            alt={popGame.name}
+          ></img>
+        ) : (
+          <img
+            src={imagenNoEncontrada}
+            onerror={imagenNoEncontrada}
+            className="card-img-top"
+            alt={popGame.name}
+          ></img>
+        )}
 
         {/* Rating del juego */}
         <div className="card-body">
