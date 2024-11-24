@@ -240,7 +240,7 @@ const UnVideojuego = () => {
       }
 
       if (respuesta == true) {
-        // Enviar al usuario a la página de juegos
+        // Enviar al usuario a su perfil
         window.location.href = "/usuario";
       } else {
         errorPersonalizado("Error al insertar o modificar");
@@ -540,6 +540,7 @@ const UnVideojuego = () => {
         </div>
         {/* Fin del modal */}
       </div>
+
       {/* Fin del contenedor del juego */}
     </div>
   );

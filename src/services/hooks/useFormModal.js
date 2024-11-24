@@ -82,6 +82,13 @@ const useFormModal = () => {
       }
     }
 
+    // Las veces jugado no puede ser inferior de 0
+    if (veces_jugado < 0) {
+      errores = true;
+      setErrors("Dato incorrecto en Veces terminado: no puede ser menor que 0")
+      return errores;
+    }
+
     // Si todo es correcto
     return errores;
 

@@ -8,27 +8,31 @@
     margin:  0 auto;
 }
 
+.info_juego {
+    display: block;
+}
+
 /* Imagen del juego en la tabla */
 .imagen_tabla {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
 }
 
 /* Contenedor del icono de bocadillo y la reseña */
-.icon-container {
+.icon_container {
     position: relative; /* El contenedor del texto debe de ser de posición relativa */ 
     display: inline-block;
 }
 
 /* El texto que aparece cuando el cursor se pasa por encima del icono */
-.tooltip-text {
+.tooltip_text {
     visibility: hidden;
-    width: 400px;
+    width: 250px;
     background-color: #333;
     color: #fff;
     padding: 5px;
     border-radius: 5px;
-    position: absolute; /* El texto debe de ser de posición absoluta */
+    position: absolute; /* El texto debe de tener posición absoluta */
     top: -40px; 
     left: 50%;
     transform: translateX(-50%);
@@ -37,8 +41,12 @@
     transition: opacity 0.3s;
 }
 
+.text_small {
+    width: 150px;
+}
+
 /* Cuano se pasa el cursor por encima del icono */
-.icon-container:hover .tooltip-text {
+.icon_container:hover .tooltip_text {
     visibility: visible; /* Aparece el texto */
     opacity: 1; /* Opacidad 1, para que se pueda ver bien */
 }
@@ -50,4 +58,15 @@
 
 .icon:hover {
     cursor: pointer;
+}
+
+.alert-link_style:hover {
+    cursor: pointer;
+}
+
+/* Media Querys */
+@media (min-width: 1024px) {
+    .tooltip_text {
+        width: 400px;
+    }
 }

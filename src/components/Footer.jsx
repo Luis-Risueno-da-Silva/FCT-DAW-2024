@@ -36,8 +36,8 @@ const Footer = () => {
       {/* Redes sociales */}
       <div className="mt-3">
         <p>
-          <a href="#" className="icono_link"><i class="bi bi-discord"></i></a> &nbsp;
-          <a href="#" className="icono_link"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" className="icono_link me-2"><i className="bi bi-discord"></i></a> &nbsp;
+          <a href="#" className="icono_link me-2"><i className="bi bi-twitter-x"></i></a>
         </p>
       </div>
     </div>

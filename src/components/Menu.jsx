@@ -39,14 +39,14 @@ const Menu = () => {
           >
             <ul className="navbar-nav">
               {/* Para ir al Home */}
-              <li className="nav-item me-2">
+              <li className="nav-item me-5">
                 <Link to={"/"} className="nav_item_style">
                   Inicio
                 </Link>
               </li>
 
               {/* Para ir a Juegos */}
-              <li className="nav-item me-2">
+              <li className="nav-item me-5">
                 <Link to={"/juegos"} className="nav_item_style">
                   Juegos
                 </Link>
@@ -55,21 +55,21 @@ const Menu = () => {
               {dataLocalStorage ? (
                 // Para ir al perfil del usuario
                 <li className="nav-item">
-                  <Link to={"/usuario"} className="nav_item_style me-2">
-                    {dataLocalStorage}
+                  <Link to={"/usuario"} className="nav_item_style me-5">
+                    <i class="bi bi-person-fill"></i> {dataLocalStorage}
                   </Link>
 
                   <br className="ocultar" />
 
                   {/* Cerrar la sesión actual */}
                   <a className="enlace" onClick={cerrarSesion}>
-                  <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
                   </a>
                 </li>
               ) : (
                 // Para ir a Iniciar Sesión
                 <li className="nav-item me-2">
-                  <Link to={"/iniciarSesion"} className="nav_item_style me-2">
+                  <Link to={"/iniciarSesion"} className="nav_item_style me-5">
                     Iniciar sesión
                   </Link>
 

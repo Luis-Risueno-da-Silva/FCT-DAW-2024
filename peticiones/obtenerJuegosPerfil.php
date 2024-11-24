@@ -3,10 +3,11 @@ include "../db/db_connection_Baul_Juegos.php";
 
 // Obtener dato por POST
 $id_usuario = $_POST["id_usuario"];
+$estado_juego = $_POST["estado_juego"];
 
 // Preparar y ejecutar la consulta
-$stmt = $conn->prepare("SELECT * FROM juegos WHERE id_usuario = ?");
-$stmt->bind_param("s", $id_usuario);
+$stmt = $conn->prepare("SELECT * FROM juegos WHERE id_usuario = ? AND estado_juego = ?");
+$stmt->bind_param("ss", $id_usuario, $estado_juego);
 $stmt->execute();
 $result = $stmt->get_result();
 

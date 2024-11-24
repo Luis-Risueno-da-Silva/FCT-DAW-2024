@@ -29,7 +29,7 @@ $stmt->bind_param(
 if ($stmt->execute()) {
     echo json_encode(["success" => true, "message" => "Registro modificado correctamente."]);
 } else {
-    echo json_encode(["success" => false, "message" => "Error al insertar: " . $stmt->error]);
+    echo json_encode(["success" => false, "message" => "Error al modificar: " . $stmt->error]);
 }
 
 // Cerrar la conexión
