@@ -3,6 +3,7 @@ import React from "react";
 // Importar useState
 import { useState } from "react";
 
+// Importr Outlet
 import { Outlet } from "react-router-dom";
 
 // Estilos css
@@ -13,7 +14,7 @@ import Footer from "./Footer";
 
 const Juegos = () => {
 
-  // Esto representa el input de tipo "search"
+  // usetate con el que consigo el texto del search
   const [searchText, setSearchText] = useState("");
 
   // Cuando hago click sobre el botón "Buscar"
@@ -35,17 +36,19 @@ const Juegos = () => {
     <div className="div_juegos">
       {/* Título de la página y un buscador de juegos */}
       <div className="titulo_buscador">
-        <h1 className="ms-3 text-center titulo">Baúl de juegos</h1>
+        <div>
+            <h1 className="ms-3 titulo">Baúl de juegos</h1>
+        </div>
 
         {/* Para buscar juegos */}
-        <form className="d-flex formulario">
+        <form className="d-flex me-3">
           <input
             className="form-control me-2 buscador"
             type="search"
-            placeholder="Videojuego"
+            placeholder="Videojuego..."
             onChange={(e) => setSearchText(e.target.value)}
           />
-          <button className="btn btn-outline-success btn_buscar" 
+          <button className="btn btn-success btn_buscar" 
             type="button" onClick={handleButtonClick}>
             Buscar
           </button>

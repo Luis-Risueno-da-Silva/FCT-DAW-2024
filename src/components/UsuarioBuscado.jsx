@@ -1,32 +1,40 @@
 import React from "react";
-
-// Estilos css
-import "../styles/Usuario.css";
-
-// HookPersonalizado
-import useIdUsuario from "../services/hooks/useIdUsuario";
+// Para obtener el nombre del usuario, que saco de la url de la página
+import { useParams } from "react-router-dom";
+// Manejar el buscador de usuarios
+import useFormBuscarUsuario from "../services/hooks/useFormBuscarUsuario";
+// Hooks personalizados
+import useUsuarioBuscado from "../services/hooks/useUsuarioBuscado";
 import useGamesPerfil from "../services/hooks/useGamesPerfil";
-
 // Componentes
-import OneJuegoPerfil from "./OneJuegoPerfil";
+import OneJuegoUsuarioBuscado from "./OneJuegoUsuarioBuscado";
 import Footer from "./Footer";
 
-const Usuario = () => {
-  // Obtener datos del localStorage
-  let datosLocalStorage = JSON.parse(localStorage.getItem("datosUsuario"));
+const UsuarioBuscado = () => {
+  const { errors, errorPersonalizado } = useFormBuscarUsuario();
+  const params = useParams();
 
-  // Obtener el nombre del usuario
-  let nombre = datosLocalStorage.nombre;
-  let nombreFormateado = nombre.trim().replace(/ /g, '-');
-  // console.log(nombreFormateado)
+  // Obtener el nombre del usuario de la URL (el Slug)
+  const slug = params.slug;
 
-  let existenJuegos;
+  // Obtener el nombre de usuario almacenado en localStorage
+  const datosUsuario = JSON.parse(localStorage.getItem("datosUsuario")) || null;
+  const nombreUsuario = datosUsuario.nombre;
 
-  // Obtener el id del usuario
-  let idUsuario = useIdUsuario(nombreFormateado) || "";
-  // console.log(idUsuario);
+  // Redirigir al perfil del usuario actual si el slug coincide con el nombre del usuario
+  if (slug === nombreUsuario) {
+    window.location.href = "/usuario";
+  }
+
+  const {
+    existeUsuario,
+    idUsuario,
+    puedeVerActividad,
+  } = useUsuarioBuscado(slug);
 
   let arrayEstados = ["terminado", "jugando", "planeado jugar", "abandonado"];
+
+  let existenJuegos;
 
   // Array de juegos en cada estado disponible
   let arrayJuegosTerminados = [];
@@ -67,28 +75,37 @@ const Usuario = () => {
     existenJuegosAbandonados = true;
   }
 
-  const salir = () => {
-    window.location.href = "/juegos";
-  };
-
   return (
     <div className="w-100">
-      <h1 className="text-center title">Mi baúl de videojuegos</h1>
-
-      {/* Contenedor de los juegos del perfil */}
       <div className="container_tabla">
-        {/* Si no existe ningún juego en el perfil del usuario */}
-        {!existenJuegos && (
+        {/* Si el usuario buscado no permite que vean su actividad */}
+        {existeUsuario && !puedeVerActividad && (
           <div className="alert alert-danger text-center" role="alert">
-            Aún no hay juegos en tu baúl, haz clic{" "}
-            <a className="alert-link alert-link_style" onClick={salir}>
-              aquí
-            </a>{" "}
-            para buscar juegos
+            El baúl del usuario buscado es privado
           </div>
         )}
+
+        {/* Si no existe ningún juego en el perfil del usuario */}
+        {!existenJuegos && !errors && puedeVerActividad && (
+          <div className="alert alert-danger text-center" role="alert">
+            El usuario buscado no tiene juegos en su baúl
+          </div>
+        )}
+
+        {/* Si no existe el usuario */}
+        {!existeUsuario && (
+          <div className="alert alert-danger text-center" role="alert">
+            El usuario buscado no existe
+          </div>
+        )}
+
+        {/* Si existen juegos en el perfil del usuario buscado */}
+        {existeUsuario && existenJuegos && puedeVerActividad && (
+          <h1 className="text-center title">Baúl de {slug}</h1>
+        )}
+
         {/* Juegos que el usuario terminó */}
-        {existenJuegosTerminados && (
+        {existenJuegosTerminados && puedeVerActividad && (
           // Inicio de la tabla
           <table className="table me-3">
             {/* Cabecera de la tabla */}
@@ -102,25 +119,25 @@ const Usuario = () => {
                 <th scope="col">Título</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Puntuación</th>
-                <th scope="col">Modificar</th>
-                <th scope="col">Eliminar</th>
               </tr>
             </thead>
             {/* Fin de la cabecera de la tabla */}
             {/* Cuerpo de la página */}
             <tbody>
-              {arrayJuegosTerminados.map((juegoPerfil) => (
-                <OneJuegoPerfil
-                  id={juegoPerfil.id_juego}
-                  juegoPerfil={juegoPerfil}
+              {arrayJuegosTerminados.map((juegoPerfilBuscado) => (
+                <OneJuegoUsuarioBuscado
+                  id={juegoPerfilBuscado.id_juego}
+                  key={juegoPerfilBuscado.id_juego}
+                  juegoPerfilBuscado={juegoPerfilBuscado}
                 />
               ))}
             </tbody>
             {/* Fin del cuerpo de la tabla */}
           </table>
         )}
-        {/* Juegos que el usuario está jugando en ese momento */}
-        {existenJuegosJugando && (
+
+        {/* Juegos que el usuario está jugando ahora mismo */}
+        {existenJuegosJugando && puedeVerActividad && (
           // Inicio de la tabla
           <table className="table me-3">
             {/* Cabecera de la tabla */}
@@ -134,25 +151,24 @@ const Usuario = () => {
                 <th scope="col">Título</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Puntuación</th>
-                <th scope="col">Modificar</th>
-                <th scope="col">Eliminar</th>
               </tr>
             </thead>
             {/* Fin de la cabecera de la tabla */}
             {/* Cuerpo de la página */}
             <tbody>
-              {arrayJuegosJugando.map((juegoPerfil) => (
-                <OneJuegoPerfil
-                  id={juegoPerfil.id_juego}
-                  juegoPerfil={juegoPerfil}
+              {arrayJuegosJugando.map((juegoPerfilBuscado) => (
+                <OneJuegoUsuarioBuscado
+                  id={juegoPerfilBuscado.id_juego}
+                  key={juegoPerfilBuscado.id_juego}
+                  juegoPerfilBuscado={juegoPerfilBuscado}
                 />
               ))}
             </tbody>
             {/* Fin del cuerpo de la tabla */}
           </table>
         )}
-        {/* Juegos que el usuario planea jugar */}
-        {existenJuegosPlaneadosJugar && (
+
+        {existenJuegosPlaneadosJugar && puedeVerActividad && (
           // Inicio de la tabla
           <table className="table me-3">
             {/* Cabecera de la tabla */}
@@ -166,25 +182,25 @@ const Usuario = () => {
                 <th scope="col">Título</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Puntuación</th>
-                <th scope="col">Modificar</th>
-                <th scope="col">Eliminar</th>
               </tr>
             </thead>
             {/* Fin de la cabecera de la tabla */}
             {/* Cuerpo de la página */}
             <tbody>
-              {arrayJuegosPlaneadosJugar.map((juegoPerfil) => (
-                <OneJuegoPerfil
-                  id={juegoPerfil.id_juego}
-                  juegoPerfil={juegoPerfil}
+              {arrayJuegosPlaneadosJugar.map((juegoPerfilBuscado) => (
+                <OneJuegoUsuarioBuscado
+                  id={juegoPerfilBuscado.id_juego}
+                  key={juegoPerfilBuscado.id_juego}
+                  juegoPerfilBuscado={juegoPerfilBuscado}
                 />
               ))}
             </tbody>
             {/* Fin del cuerpo de la tabla */}
           </table>
         )}
+
         {/* Juegos que el usuario abandonó */}
-        {existenJuegosAbandonados && (
+        {existenJuegosAbandonados && puedeVerActividad && (
           // Inicio de la tabla
           <table className="table me-3">
             {/* Cabecera de la tabla */}
@@ -198,17 +214,16 @@ const Usuario = () => {
                 <th scope="col">Título</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Puntuación</th>
-                <th scope="col">Modificar</th>
-                <th scope="col">Eliminar</th>
               </tr>
             </thead>
             {/* Fin de la cabecera de la tabla */}
             {/* Cuerpo de la página */}
             <tbody>
-              {arrayJuegosAbandonados.map((juegoPerfil) => (
-                <OneJuegoPerfil
-                  id={juegoPerfil.id_juego}
-                  juegoPerfil={juegoPerfil}
+              {arrayJuegosAbandonados.map((juegoPerfilBuscado) => (
+                <OneJuegoUsuarioBuscado
+                  id={juegoPerfilBuscado.id_juego}
+                  key={juegoPerfilBuscado.id_juego}
+                  juegoPerfilBuscado={juegoPerfilBuscado}
                 />
               ))}
             </tbody>
@@ -216,14 +231,9 @@ const Usuario = () => {
           </table>
         )}
       </div>
-      {/* Fin del contenedor de los juegos del perfil */}
-
-      {existenJuegos && 
-        <Footer />
-      }
-      
+      {existenJuegos && puedeVerActividad && <Footer />}
     </div>
   );
 };
 
-export default Usuario;
+export default UsuarioBuscado;

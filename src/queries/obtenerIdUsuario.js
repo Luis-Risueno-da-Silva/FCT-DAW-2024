@@ -14,7 +14,7 @@ const obtenerIdUsuario = (formData) => {
       } else {
         // Si el resultado devuelve algo, significa que existe el usuario
         console.log("Usuario encontrado");
-        return data; // Retorna verdadero
+        return data; // Retorna datos
       }
     })
     // .catch((error) => {

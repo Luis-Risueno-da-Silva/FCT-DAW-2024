@@ -212,6 +212,7 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
                     required
                     name="estado"
                     onChange={handleChange}
+                    defaultValue={"Seleccione una opción..."}
                   >
                     <option selected disabled value="0">
                       Seleccione una opción...
@@ -298,7 +299,7 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
                 {/* Mostrar alerta si hay un error */}
                 {errors && (
                   <div
-                    className="alert alert-danger mi_alert mt-3"
+                    className="alert alert-danger mi_alert mt-3 mb-3"
                     role="alert"
                   >
                     {errors}
@@ -333,7 +334,7 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
       <div
         class="modal fade"
         id={`modalEliminarJuego${juegoPerfil.id_juego}`}
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="modalEliminar"
         aria-hidden="true"
       >

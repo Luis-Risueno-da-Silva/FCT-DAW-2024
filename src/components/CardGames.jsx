@@ -13,7 +13,7 @@ const CardGames = ({ game }) => {
           {/* Imagen del juego */}
           <img
             src={game.background_image}
-            onerror={"../assets/images/imagenNoEncontrada.jpg"}
+            onError={"../assets/images/imagenNoEncontrada.jpg"}
             className="card-img-top imagen_tarjeta"
             alt={game.name}
           ></img>

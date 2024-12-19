@@ -22,6 +22,8 @@ import AllJuegos from './components/AllJuegos.jsx';
 import RegistrarUsuario from './components/RegistrarUsuario.jsx'
 import IniciarSesion from './components/IniciarSesion.jsx'
 import Usuario from './components/Usuario.jsx'
+import BuscarUsuarios from './components/BuscarUsuarios.jsx'
+import UsuarioBuscado from './components/UsuarioBuscado.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
@@ -53,6 +55,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
                 {/* La ruta del usuario */}
                 <Route path='/usuario' element={<Usuario />} />
+
+                {/* La ruta de buscar usuarios */}
+                <Route path='/buscarUsuario' element={<BuscarUsuarios />}>
+                    <Route path=':slug' element={<UsuarioBuscado />} />
+                </Route>
 
             </Route>
 

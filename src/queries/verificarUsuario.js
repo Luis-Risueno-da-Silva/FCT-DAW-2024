@@ -6,7 +6,7 @@ const verificarUsuario = (formData) => {
   })
     .then((response) => response.json()) // Obtener los datos
     .then((data) => {
-      console.log("Datos: ", data);
+      // console.log("Datos: ", data);
       // Si el resultado no devuelve nada, significa que NO existe el usuario
       if (data.length == 0) {
         console.log("Usuario no encontrado");
@@ -17,10 +17,10 @@ const verificarUsuario = (formData) => {
         return true; // Retorna verdadero
       }
     })
-    .catch((error) => {
-      console.error("Error:", error);
-      return;
-    });
+    // .catch((error) => {
+    //   console.error("Error:", error);
+    //   return;
+    // });
 };
 
 export default verificarUsuario;

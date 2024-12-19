@@ -24,7 +24,7 @@ const Footer = () => {
         {/* Información */}
         <div>
           <p>
-            <i class="bi bi-c-circle"></i> Baúl de juegos - V 1.0 - Powered by &nbsp;
+            <i className="bi bi-c-circle"></i> Baúl de juegos - V 1.0 - Powered by &nbsp;
             <a href="https://rawg.io/apidocs" className="info_link text-primary" target="_blank">
               RAWG
             </a>

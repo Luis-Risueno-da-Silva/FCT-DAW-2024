@@ -34,34 +34,10 @@ const IniciarSesion = () => {
       // console.log(errores)
 
       if (errores == false) {
-        enviarFormulario();
+        crearLocalStorage(datosForm.nombre);
       }
     }, 2000);
   };
-
-  // Cuando se envía el formulario   
-  const enviarFormulario = () => {
-
-    const formData = new FormData();
-    formData.append("nombre", datosForm.nombre);
-    formData.append("contraseña", datosForm.contraseña);
-
-    // Comprobar que haya un usuario en la base de datos con las credenciales del formulario
-    const obtenerRespuestaInicioSesion = async () => {
-        // Se espera a que la petición termine
-        let respuesta = await iniciarSesion(formData)
-
-        if (respuesta == true) {
-            crearLocalStorage(datosForm.nombre)
-        }else {
-            errorPersonalizado("El usuario no existe en la página")
-        }
-
-    }
-
-    obtenerRespuestaInicioSesion();
-
-  }
 
   return (
     <div>

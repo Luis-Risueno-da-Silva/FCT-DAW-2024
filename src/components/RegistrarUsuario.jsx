@@ -47,7 +47,7 @@ const RegistrarUsuario = () => {
      * un formulario HTML y prepararlos para su envío a través de una solicitud HTTP
      */
     const formDataNombre = new FormData();
-    formDataNombre.append("nombre", datosForm.nombre);
+    formDataNombre.append("nombre", datosForm.nombre.replace(/ /g, '-'));
 
     const formDataCorreo = new FormData();
     formDataCorreo.append("correo_electronico", datosForm.correo_electronico);
@@ -90,7 +90,7 @@ const RegistrarUsuario = () => {
     // Registrar el usuario en la base de datos
     const consultaRegistrarUsuario = async () => {
       const formDataRegistro = new FormData();
-      formDataRegistro.append("nombre", datosForm.nombre);
+      formDataRegistro.append("nombre", datosForm.nombre.replace(/ /g, '-'));
       formDataRegistro.append(
         "correo_electronico",
         datosForm.correo_electronico

@@ -133,12 +133,13 @@ const UnVideojuego = () => {
     if (datosLocalStorage != null) {
       // Obtener nombre del usuario
       let nombreUsuario = datosLocalStorage.nombre;
+      let nombreFormateado = nombreUsuario.trim().replace(/ /g, '-');
 
-      console.log("El nombre del usuario: " + nombreUsuario);
+      // console.log("El nombre del usuario: " + nombreFormateado);
 
       // Para hacer la consulta de obtener el id del usuario
       const formDataNombre = new FormData();
-      formDataNombre.append("nombre", nombreUsuario);
+      formDataNombre.append("nombre", nombreFormateado);
 
       // Obtener id del usuario a partir del nombre
       let datosUsuario = await obtenerIdUsuario(formDataNombre);
@@ -163,7 +164,7 @@ const UnVideojuego = () => {
     // Comprobar que el videojuego exista en el perfil
     setVideojuegoPerfil(respuesta);
 
-    console.log(videojuegoPerfil);
+    // console.log(videojuegoPerfil);
 
     // if (videojuegoPerfil == false) {
     //   console.log("El juego no está en el perfil del usuario");
@@ -193,11 +194,12 @@ const UnVideojuego = () => {
   const enviarFormulario = () => {
     let datosLocalStorage = JSON.parse(localStorage.getItem("datosUsuario"));
     let nombreUsuario = datosLocalStorage.nombre;
+    let nombreFormateado = nombreUsuario.trim().replace(/ /g, '-');
 
     // console.log("El nombre del usuario: " + nombreUsuario);
 
     const formDataNombre = new FormData();
-    formDataNombre.append("nombre", nombreUsuario);
+    formDataNombre.append("nombre", nombreFormateado);
 
     // Obtener id del usuario
     const obtenerRespuestaUsuario = async () => {
@@ -506,7 +508,7 @@ const UnVideojuego = () => {
                   {/* Mostrar alerta si hay un error */}
                   {errors && (
                     <div
-                      className="alert alert-danger mi_alert mt-3"
+                      className="alert alert-danger mi_alert mt-3 mb-3"
                       role="alert"
                     >
                       {errors}

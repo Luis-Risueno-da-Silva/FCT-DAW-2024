@@ -53,22 +53,29 @@ const Menu = () => {
               </li>
 
               {dataLocalStorage ? (
-                // Para ir al perfil del usuario
                 <li className="nav-item">
+                  {/* Para ir a Buscar Usuarios */}
+                  <Link to={"/buscarUsuario"} className="nav_item_style me-5">
+                    Buscar Usuario
+                  </Link>
+
+                  <br className="ocultar" />
+
+                  {/* Para ir al perfil del usuario */}
                   <Link to={"/usuario"} className="nav_item_style me-5">
-                    <i class="bi bi-person-fill"></i> {dataLocalStorage}
+                    <i className="bi bi-person-fill"></i> {dataLocalStorage}
                   </Link>
 
                   <br className="ocultar" />
 
                   {/* Cerrar la sesión actual */}
                   <a className="enlace" onClick={cerrarSesion}>
-                    <i class="bi bi-box-arrow-right"></i> Cerrar sesión
+                    <i className="bi bi-box-arrow-right"></i> Cerrar sesión
                   </a>
                 </li>
               ) : (
-                // Para ir a Iniciar Sesión
                 <li className="nav-item me-2">
+                  {/* Para ir a Iniciar Sesión */}
                   <Link to={"/iniciarSesion"} className="nav_item_style me-5">
                     Iniciar sesión
                   </Link>

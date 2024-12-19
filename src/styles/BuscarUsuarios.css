@@ -1,0 +1,43 @@
+.titulo_buscador {
+    width: 100%;
+    margin-top: 60px;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.buscador {
+    width: 400px;
+    height: 50px;
+}
+
+.btn_buscar {
+    height: 50px;
+}
+
+/* Conteendor de la tabla */
+.container_tabla {
+    width: 80%;
+    margin:  0 auto;
+}
+
+.info_juego {
+    display: block;
+}
+
+/* Mensaje de error */
+.mi_alert {
+    width: 500px;
+    margin: 0 auto;
+}
+
+/* Breakpoints */
+
+/* Breakpoint a 850px */
+@media (min-width: 850px) {
+    .buscador {
+        width: 500px;
+    }
+}
