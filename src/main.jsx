@@ -24,6 +24,7 @@ import IniciarSesion from './components/IniciarSesion.jsx'
 import Usuario from './components/Usuario.jsx'
 import BuscarUsuarios from './components/BuscarUsuarios.jsx'
 import UsuarioBuscado from './components/UsuarioBuscado.jsx'
+import PaginaConfig from './components/PaginaConfig.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 
@@ -55,6 +56,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
                 {/* La ruta del usuario */}
                 <Route path='/usuario' element={<Usuario />} />
+
+                {/* La configuración del usuario */}
+                <Route path='/configuracion' element={<PaginaConfig />} />
 
                 {/* La ruta de buscar usuarios */}
                 <Route path='/buscarUsuario' element={<BuscarUsuarios />}>

@@ -1,48 +1,21 @@
 import { useState } from "react";
 
 const useFormModal = () => {
-  // Datos del formulario
-  const [datosForm, setDatosForm] = useState({
-    estado: "",
-    nota: 0,
-    resena: "",
-    fecha_inicio: "",
-    fecha_fin: "",
-    veces_jugado: 0,
-  });
+  // Errores en el formulario
   const [errors, setErrors] = useState("");
-
-  // Manejar cambios en el formulario
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    // Settear atributos
-    setDatosForm({
-      ...datosForm,
-      [name]: value,
-    });
-
-    // console.log(datosForm)
-  };
 
   // Evitar que el formulario se envíe
   const handleSubmit = (e) => {
-    e.preventDefault(); // Evitar el comportamiento por defecto del formulario
-
-    // console.log(datosForm);
-    // console.log(parseFloat(datosForm.nota) % 1)
+    e.preventDefault(); 
   };
 
   // Comprobar errores
-  const handleErrors = () => {
-    const { estado, nota, resena, fecha_inicio, fecha_fin, veces_jugado } =
-      datosForm;
-
+  const handleErrors = (estado, nota, resena, fecha_inicio, fecha_fin, veces_jugado) => {
     // Inicializar errores a false
     let errores = false;
 
     // Comprobar que se haya seleccionado un estado del juego
-    if (estado == "") {
+    if (estado == "" || estado == "0") {
       errores = true;
       setErrors("Debes de indicar un estado del juego");
       return errores;
@@ -58,10 +31,10 @@ const useFormModal = () => {
     }
 
     // Si el videojuego se planea para jugar, no hay nota
-    if (estado == "planeado jugar") {
+    if (estado != "terminado") {
       if (nota != "") {
         errores = true;
-        setErrors("No puedes poner nota a un juego que todavía no has jugado")
+        setErrors("No puedes poner nota a un juego que no has terminado")
         return errores;
       }
     }
@@ -140,8 +113,6 @@ const useFormModal = () => {
   };
 
   return {
-    datosForm,
-    handleChange,
     handleSubmit,
     errors,
     handleErrors,

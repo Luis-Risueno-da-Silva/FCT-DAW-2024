@@ -23,6 +23,9 @@ import verificarJuegoPerfil from "../queries/verificarJuegoPerfil";
 import modificarJuegoPerfil from "../queries/modificarJuegoPerfil";
 
 const UnVideojuego = () => {
+  const { handleSubmit, errors, handleErrors, errorPersonalizado } =
+    useFormModal();
+
   let params = useParams();
 
   // console.log(params)
@@ -97,33 +100,58 @@ const UnVideojuego = () => {
   let dataLocalStorage = comprobarLocalStorage();
   // console.log(dataLocalStorage);
 
+  // ID del usuario
+  let idUsuario;
+
+  // El estado del juego con la primera letra en mayúscula
+  let estadoJuegoFormateado;
+
+  // Para verificar que el juego exista en el perfil del usuario
+  const [existeJuegoEnPerfil, setExisteJuegoEnPerfil] = useState(false);
+
+  // Información del videojuego que se añadirá al perfil del usuario
+  const [estadoJuego, setEstadoJuego] = useState();
+  const [nota_juego, setNotaJuego] = useState();
+  const [reseña, setReseña] = useState();
+  const [fecha_inicio, setFechaInicio] = useState();
+  const [fecha_fin, setFechaFin] = useState();
+  const [veces_jugado, setVecesJugado] = useState();
+
+  // Manejar cambios en el estado del juego
+  const handleChangeEstadoJuego = (e) => {
+    setEstadoJuego(e.target.value);
+  };
+
+  // Manejar cambios en la nota del juego
+  const handleChangeNotaJuego = (e) => {
+    setNotaJuego(e.target.value);
+  };
+
+  // Manejar cambios en la reseña del videojuego
+  const handleChangeReseña = (e) => {
+    setReseña(e.target.value);
+  };
+
+  // Manejar cambios en la fecha de inicio
+  const handleChangeFechaInicio = (e) => {
+    setFechaInicio(e.target.value);
+  };
+
+  // Manejar cambios en la fecha de fin
+  const handleChangeFechaFin = (e) => {
+    setFechaFin(e.target.value);
+  };
+
+  // Manejar cambios en las veces que se ha jugado a un juego
+  const handleChangeVecesJugado = (e) => {
+    setVecesJugado(e.target.value);
+  };
+
   let fecha = new Date();
   let año = fecha.getFullYear();
   let mes = String(fecha.getMonth() + 1).padStart(2, "0"); // Meses empiezan en 0
   let día = String(fecha.getDate()).padStart(2, "0");
   let fechaFormateada = año + "-" + mes + "-" + día;
-
-  const {
-    datosForm,
-    handleChange,
-    handleSubmit,
-    errors,
-    handleErrors,
-    errorPersonalizado,
-  } = useFormModal();
-
-  // ID del usuario
-  let idUsuario;
-
-  // Si el videojuego ya está en el perfil del usuario
-  const [videojuegoPerfil, setVideojuegoPerfil] = useState({
-    estado_juego: "",
-    nota_juego: 0,
-    reseña: "",
-    fecha_inicio: "",
-    fecha_finalizacion: "",
-    veces_jugado: 0,
-  });
 
   // Comprobar si el juego se encuentra en el perfil del usuario o no
   const comprobarUsuario = async () => {
@@ -133,7 +161,7 @@ const UnVideojuego = () => {
     if (datosLocalStorage != null) {
       // Obtener nombre del usuario
       let nombreUsuario = datosLocalStorage.nombre;
-      let nombreFormateado = nombreUsuario.trim().replace(/ /g, '-');
+      let nombreFormateado = nombreUsuario.trim().replace(/ /g, "-");
 
       // console.log("El nombre del usuario: " + nombreFormateado);
 
@@ -153,6 +181,7 @@ const UnVideojuego = () => {
     }
   };
 
+  // Comprobar que el juego ya se encuentre en el perfil del usuario
   const comprobarJuegoPerfil = async () => {
     // Para hacer la consulta de saber si el juego está en el perfil del usuario
     const formDataJuego = new FormData();
@@ -160,28 +189,30 @@ const UnVideojuego = () => {
     formDataJuego.append("id_juego", videojuego.id);
 
     let respuesta = await verificarJuegoPerfil(formDataJuego);
+    console.log(respuesta);
 
-    // Comprobar que el videojuego exista en el perfil
-    setVideojuegoPerfil(respuesta);
+    if (respuesta != false) {
+      setExisteJuegoEnPerfil(true);
+    }
 
-    // console.log(videojuegoPerfil);
-
-    // if (videojuegoPerfil == false) {
-    //   console.log("El juego no está en el perfil del usuario");
-    //   console.log(
-    //     "***********************************************************"
-    //   );
-    // } else {
-    //   console.log("El videojuego se encuentra en el perfil del usuario");
-    //   console.log(
-    //     "***********************************************************"
-    //   );
-    // }
+    setEstadoJuego(respuesta.estado_juego);
+    setNotaJuego(respuesta.nota_juego);
+    setReseña(respuesta.reseña);
+    setFechaInicio(respuesta.fecha_inicio);
+    setFechaFin(respuesta.fecha_finalizacion);
+    setVecesJugado(respuesta.veces_jugado);
   };
 
   // Comprobar errores del formulario
   const comprobarErrores = async () => {
-    let errores = await handleErrors();
+    const errores = await handleErrors(
+      estadoJuego,
+      nota_juego,
+      reseña,
+      fecha_inicio,
+      fecha_fin,
+      veces_jugado
+    );
 
     // console.log(errores)
 
@@ -194,7 +225,7 @@ const UnVideojuego = () => {
   const enviarFormulario = () => {
     let datosLocalStorage = JSON.parse(localStorage.getItem("datosUsuario"));
     let nombreUsuario = datosLocalStorage.nombre;
-    let nombreFormateado = nombreUsuario.trim().replace(/ /g, '-');
+    let nombreFormateado = nombreUsuario.trim().replace(/ /g, "-");
 
     // console.log("El nombre del usuario: " + nombreUsuario);
 
@@ -221,12 +252,12 @@ const UnVideojuego = () => {
       formDataJuego.append("id_juego", videojuego.id);
       formDataJuego.append("nombre_juego", videojuego.name);
       formDataJuego.append("imagen_juego", videojuego.background_image);
-      formDataJuego.append("estado_juego", datosForm.estado);
-      formDataJuego.append("nota_juego", datosForm.nota);
-      formDataJuego.append("reseña", datosForm.resena);
-      formDataJuego.append("fecha_inicio", datosForm.fecha_inicio);
-      formDataJuego.append("fecha_finalizacion", datosForm.fecha_fin);
-      formDataJuego.append("veces_jugado", datosForm.veces_jugado);
+      formDataJuego.append("estado_juego", estadoJuego);
+      formDataJuego.append("nota_juego", nota_juego);
+      formDataJuego.append("reseña", reseña);
+      formDataJuego.append("fecha_inicio", fecha_inicio);
+      formDataJuego.append("fecha_finalizacion", fecha_fin);
+      formDataJuego.append("veces_jugado", veces_jugado);
 
       // Respuesta de la consulta de modificación o actualización, según proceda
       let respuesta;
@@ -252,6 +283,8 @@ const UnVideojuego = () => {
     obtenerRespuestaUsuario();
   };
 
+  comprobarUsuario();
+
   return (
     <div>
       {/* Contenedor del juego */}
@@ -263,7 +296,7 @@ const UnVideojuego = () => {
             <img
               src={videojuego.background_image}
               className="card-img-top imagen_tarjeta"
-              onerror={"../assets/images/imagenNoEncontrada.jpg"}
+              onError={"../assets/images/imagenNoEncontrada.jpg"}
             ></img>
           </div>
           {/* Fin de la imagen del juego */}
@@ -307,11 +340,18 @@ const UnVideojuego = () => {
               className="btn btn-primary modal_trigger"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              onClick={comprobarUsuario}
+              // onClick={comprobarUsuario}
             >
               Añadir juego al perfil
             </button>
           ) : (
+            // <button
+            //   type="button"
+            //   className="btn btn-primary modal_trigger"
+            //   disabled
+            // >
+            //   Añadir juego al perfil
+            // </button>
             ""
           )}
           {/* Fin del botón para mostrar el modal */}
@@ -387,9 +427,15 @@ const UnVideojuego = () => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  ¿Añadir {videojuego.name} al perfil?
-                </h1>
+                {existeJuegoEnPerfil ? (
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">
+                    ¿Modificar {videojuego.name}?
+                  </h1>
+                ) : (
+                  <h1 className="modal-title fs-5" id="exampleModalLabel">
+                    ¿Añadir {videojuego.name} al perfil?
+                  </h1>
+                )}
                 <button
                   type="button"
                   className="btn-close"
@@ -404,16 +450,16 @@ const UnVideojuego = () => {
                   {/* Select con el estado del juego (obligatorio) */}
                   <div className="mb-3">
                     <label for="selectOption" className="form-label">
-                      Estado
+                      Estado 
                     </label>
                     <select
                       className="form-select"
                       id="selectOption"
                       required
                       name="estado"
-                      onChange={handleChange}
+                      onChange={handleChangeEstadoJuego}
                     >
-                      <option selected disabled value="0">
+                      <option selected value="0">
                         Seleccione una opción...
                       </option>
                       <option value="terminado">Terminado</option>
@@ -437,8 +483,8 @@ const UnVideojuego = () => {
                       id="decimalInput"
                       placeholder="Con dos decimales, de 0 al 5"
                       name="nota"
-                      // value={videojuegoPerfil.nota_juego || ""}
-                      onChange={handleChange}
+                      value={nota_juego}
+                      onChange={handleChangeNotaJuego}
                     ></input>
                   </div>
 
@@ -453,8 +499,8 @@ const UnVideojuego = () => {
                       rows="3"
                       placeholder="Escribe aquí la reseña/comentario"
                       name="resena"
-                      // value={videojuegoPerfil.reseña || ""}
-                      onChange={handleChange}
+                      value={reseña}
+                      onChange={handleChangeReseña}
                     ></textarea>
                   </div>
 
@@ -467,9 +513,9 @@ const UnVideojuego = () => {
                       type="date"
                       className="form-control"
                       id="dateBeforeToday"
-                      // max="{{ fechaActual }}"
                       name="fecha_inicio"
-                      onChange={handleChange}
+                      value={fecha_inicio}
+                      onChange={handleChangeFechaInicio}
                       max={fechaFormateada}
                     ></input>
                   </div>
@@ -483,10 +529,10 @@ const UnVideojuego = () => {
                       type="date"
                       className="form-control"
                       id="dateToday"
-                      // value="{{ fechaActual }}"
                       name="fecha_fin"
-                      onChange={handleChange}
-                      min={datosForm.fecha_inicio}
+                      value={fecha_fin}
+                      onChange={handleChangeFechaFin}
+                      min={fecha_inicio}
                       max={fechaFormateada}
                     ></input>
                   </div>
@@ -501,7 +547,8 @@ const UnVideojuego = () => {
                       className="form-control"
                       id="numberInput"
                       name="veces_jugado"
-                      onChange={handleChange}
+                      value={veces_jugado}
+                      onChange={handleChangeVecesJugado}
                     ></input>
                   </div>
 

@@ -46,14 +46,14 @@ const useFormInicioSesion = () => {
     let errores = false;
 
     // Comprobar que se haya escrito un usuario
-    if (nombre == "") {
+    if (nombre.trim() == "") {
         setErrors("Por favor, escribe el nombre de usuario");
         errores = true;
         return errores;
     }
 
     // Validar la fortaleza de la contraseña
-    if (!validarContraseña(contraseña)) {
+    if (!validarContraseña(contraseña.trim())) {
         setErrors(
           "La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y números"
         );

@@ -69,19 +69,19 @@ const useFormReg = () => {
       return errores;
     }
 
-    // Validar la fortaleza de la contraseña
-    if (!validarContraseña(contraseña)) {
+    // Validar que el correo esté bien escrito
+    if (!validarCorreo(correo_electronico)) {
       setErrors(
-        "La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y números"
+        "El formato del correo electróncio es: example@example.com/.es"
       );
       errores = true;
       return errores;
     }
 
-    // Validar que el correo esté bien escrito
-    if (!validarCorreo(correo_electronico)) {
+    // Validar la fortaleza de la contraseña
+    if (!validarContraseña(contraseña)) {
       setErrors(
-        "El formato del correo electróncio es: example@example.com/.es"
+        "La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y números"
       );
       errores = true;
       return errores;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 // Funciones del formulario
 import useFormModal from "../services/hooks/useFormModal";
@@ -8,37 +8,74 @@ import modificarJuegoPerfil from "../queries/modificarJuegoPerfil";
 import eliminarJuegoPerfil from "../queries/eliminarJuegoPerfil";
 
 const OneJuegoPerfil = ({ juegoPerfil }) => {
-  // console.log(juegoPerfil);
+  console.log(juegoPerfil);
+
+  const { handleSubmit, errors, handleErrors, errorPersonalizado } =
+    useFormModal();
 
   // Comprobar si el usuario escribió una reseña
-  let reseña = juegoPerfil.reseña;
+  const [reseña, setReseña] = useState(juegoPerfil.reseña);
   let existeReseña = false;
 
   if (reseña.trim() != "") {
     existeReseña = true;
   }
 
+  // Manejar cambios en la reseña del videojuego
+  const handleChangeReseña = (e) => {
+    setReseña(e.target.value);
+  };
+
   // Comprobar si el usuario escribió las veces que jugó al juego
-  let veces_jugado = juegoPerfil.veces_jugado;
+  const [veces_jugado, setVecesJugado] = useState(juegoPerfil.veces_jugado);
   let existeVecesJugado = false;
 
   if (veces_jugado > 0) {
     existeVecesJugado = true;
   }
 
+  // Manejar cambios en las veces que se ha jugado a un juego
+  const handleChangeVecesJugado = (e) => {
+    setVecesJugado(e.target.value);
+  };
+
   // Comprobar si se ha indicado fecha de inicio y de finalización
-  let fecha_inicio = juegoPerfil.fecha_inicio;
+  const [fecha_inicio, setFechaInicio] = useState(juegoPerfil.fecha_inicio || "");
   let existeFechaInicio = false;
-  let fecha_fin = juegoPerfil.fecha_finalizacion;
+  const [fecha_fin, setFechaFin] = useState(juegoPerfil.fecha_fin || "");
   let existeFechaFin = false;
 
-  if (fecha_inicio != "0000-00-00" && fecha_fin != "0000-00-00") {
+  if (fecha_inicio != "" && fecha_fin != "") {
     existeFechaInicio = true;
     existeFechaFin = true;
   }
 
+  // Manejar cambios en la fecha de inicio
+  const handleChangeFechaInicio = (e) => {
+    setFechaInicio(e.target.value);
+  };
+
+  // Manejar cambios en la fecha de fin
+  const handleChangeFechaFin = (e) => {
+    setFechaFin(e.target.value);
+  };
+
+  // La nota del juego
+  const [nota_juego, setNotaJuego] = useState(juegoPerfil.nota_juego);
+
+  // Manejar cambios en la nota del juego
+  const handleChangeNotaJuego = (e) => {
+    setNotaJuego(e.target.value);
+  };
+
   // El estado del juego
-  let estadoJuego = juegoPerfil.estado_juego;
+  const [estadoJuego, setEstadoJuego] = useState(juegoPerfil.estado_juego);
+
+  // Manejar cambios en el estado del juego
+  const handleChangeEstadoJuego = (e) => {
+    setEstadoJuego(e.target.value);
+  };
+
   // El estado del juego con la primera letra en mayúscula
   let estadoJuegoFormateado =
     estadoJuego.charAt(0).toUpperCase() + estadoJuego.slice(1);
@@ -58,20 +95,17 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
   let día = String(fecha.getDate()).padStart(2, "0");
   let fechaFormateada = `${año}-${mes}-${día}`;
 
-  const {
-    datosForm,
-    handleChange,
-    handleSubmit,
-    errors,
-    handleErrors,
-    errorPersonalizado,
-  } = useFormModal();
-
   // Comprobar errores del formulario
   const comprobarErrores = async () => {
-    const errores = await handleErrors();
+    const errores = await handleErrors(
+      estadoJuego,
+      nota_juego,
+      reseña,
+      fecha_inicio,
+      fecha_fin,
+      veces_jugado
+    );
     if (!errores) {
-      console.log(datosForm);
       modificarJuego();
     }
   };
@@ -82,12 +116,12 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
     const formDataJuego = new FormData();
     formDataJuego.append("id_usuario", id_usuario);
     formDataJuego.append("id_juego", id_juego);
-    formDataJuego.append("estado_juego", datosForm.estado);
-    formDataJuego.append("nota_juego", datosForm.nota);
-    formDataJuego.append("reseña", datosForm.resena);
-    formDataJuego.append("fecha_inicio", datosForm.fecha_inicio);
-    formDataJuego.append("fecha_finalizacion", datosForm.fecha_fin);
-    formDataJuego.append("veces_jugado", datosForm.veces_jugado);
+    formDataJuego.append("estado_juego", estadoJuego);
+    formDataJuego.append("nota_juego", nota_juego);
+    formDataJuego.append("reseña", reseña);
+    formDataJuego.append("fecha_inicio", fecha_inicio);
+    formDataJuego.append("fecha_finalizacion", fecha_fin);
+    formDataJuego.append("veces_jugado", veces_jugado);
 
     const respuesta = await modificarJuegoPerfil(formDataJuego);
     if (respuesta) {
@@ -129,7 +163,7 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
             <span className="tooltip_text text_small">
               Veces jugado: {juegoPerfil.veces_jugado}
             </span>
-            <i class="bi bi-controller ms-5 icon"></i>
+            <i className="bi bi-controller ms-5 icon"></i>
           </div>
         )}
         {/* Reseña del juego (si existe) */}
@@ -143,7 +177,8 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
         {existeFechaInicio && existeFechaFin && (
           <div className="icon_container">
             <span className="tooltip_text">
-              Inicio: {juegoPerfil.fecha_inicio} Fin: {juegoPerfil.fecha_finalizacion}
+              Inicio: {juegoPerfil.fecha_inicio} Fin:{" "}
+              {juegoPerfil.fecha_finalizacion}
             </span>
             <i className="bi bi-calendar-fill ms-5 icon"></i>
           </div>
@@ -204,19 +239,17 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
                 {/* Select con el estado del juego (obligatorio) */}
                 <div className="mb-3">
                   <label htmlFor="selectOption" className="form-label">
-                    Estado
+                    Estado -- Actualmente: {estadoJuegoFormateado}
                   </label>
                   <select
                     className="form-select"
                     id="selectOption"
                     required
                     name="estado"
-                    onChange={handleChange}
-                    defaultValue={"Seleccione una opción..."}
+                    onChange={handleChangeEstadoJuego}
+                    // defaultValue={"Seleccione una opción..."}
                   >
-                    <option selected disabled value="0">
-                      Seleccione una opción...
-                    </option>
+                    <option value="0">Seleccione una opción...</option>
                     <option value="terminado">Terminado</option>
                     <option value="jugando">Jugando</option>
                     <option value="planeado jugar">Planeado jugar</option>
@@ -237,7 +270,8 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
                     id="decimalInput"
                     placeholder="Con dos decimales, de 0 al 5"
                     name="nota"
-                    onChange={handleChange}
+                    value={nota_juego}
+                    onChange={handleChangeNotaJuego}
                   ></input>
                 </div>
                 {/* Reseña/comentario del juego (opcional) */}
@@ -251,7 +285,8 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
                     rows="3"
                     placeholder="Escribe aquí la reseña/comentario"
                     name="resena"
-                    onChange={handleChange}
+                    value={reseña}
+                    onChange={handleChangeReseña}
                   ></textarea>
                 </div>
                 {/* Fecha de inicio del juego (opcional) */}
@@ -264,7 +299,8 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
                     className="form-control"
                     id="dateBeforeToday"
                     name="fecha_inicio"
-                    onChange={handleChange}
+                    value={fecha_inicio}
+                    onChange={handleChangeFechaInicio}
                     max={fechaFormateada}
                   ></input>
                 </div>
@@ -278,8 +314,9 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
                     className="form-control"
                     id="dateToday"
                     name="fecha_fin"
-                    onChange={handleChange}
-                    min={datosForm.fecha_inicio}
+                    value={fecha_fin}
+                    onChange={handleChangeFechaFin}
+                    min={fecha_inicio}
                     max={fechaFormateada}
                   ></input>
                 </div>
@@ -293,7 +330,8 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
                     className="form-control"
                     id="numberInput"
                     name="veces_jugado"
-                    onChange={handleChange}
+                    value={veces_jugado}
+                    onChange={handleChangeVecesJugado}
                   ></input>
                 </div>
                 {/* Mostrar alerta si hay un error */}
@@ -332,36 +370,36 @@ const OneJuegoPerfil = ({ juegoPerfil }) => {
 
       {/* Modal para eliminar un juego */}
       <div
-        class="modal fade"
+        className="modal fade"
         id={`modalEliminarJuego${juegoPerfil.id_juego}`}
         tabIndex="-1"
         aria-labelledby="modalEliminar"
         aria-hidden="true"
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="modalEliminar">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="modalEliminar">
                 ¿Eliminar {juegoPerfil.nombre_juego}?
               </h1>
               <button
                 type="button"
-                class="btn-close"
+                className="btn-close"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-footer">
+            <div className="modal-footer">
               <button
                 type="button"
-                class="btn btn-secondary"
+                className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Cancelar
               </button>
               <button
                 type="button"
-                class="btn btn-danger"
+                className="btn btn-danger"
                 onClick={eliminarJuego}
               >
                 Eliminar juego

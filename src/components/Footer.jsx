@@ -8,19 +8,6 @@ const Footer = () => {
     <div className="miFooter">
       {/* Información de la página */}
       <div className="div_info">
-        {/* Enlaces */}
-        <div>
-          <p>
-            <a href="#" className="info_link">
-              Sobre nosotros
-            </a>{" "}
-            &nbsp;
-            <a href="#" className="info_link">
-              Contacto
-            </a>
-          </p>
-        </div>
-
         {/* Información */}
         <div>
           <p>

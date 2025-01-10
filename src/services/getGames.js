@@ -3,7 +3,7 @@ export const getGames = (page) => {
   const API_KEY = "153236f9f6be477ebd30352e5ef827a5";
 
   // Petición
-  const url = "https://api.rawg.io/api/games?&key="+API_KEY+"&page="+page//+"&ordering=-"+order
+  const url = "https://api.rawg.io/api/games?&key="+API_KEY+"&page="+page
 
   return fetch(url)
     .then(response => response.json())

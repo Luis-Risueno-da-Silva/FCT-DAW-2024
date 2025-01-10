@@ -22,20 +22,40 @@ const IniciarSesion = () => {
     errorPersonalizado,
   } = useFormInicioSesion();
 
-  // Comprobar errores en el formulario
-  const comprobarErrores = () => {
+  let existeUsuario;
 
-    console.log(datosForm)
+  // Comprobar errores en el formulario
+  const comprobarErrores = async () => {
+
+    // console.log(datosForm)
+
+    let errores = handleErrors();
+
+    // console.log(errores)
+
+    if (errores == true) {
+      return;
+    }
+    
+    let formData = new FormData();
+    formData.append("nombre",datosForm.nombre)
+    formData.append("contraseña",datosForm.contraseña)
+
+    existeUsuario = await iniciarSesion(formData)
 
     // Si hay errores, no hace falta comprobar los campos del formulario.
     setTimeout(() => {
-      let errores = handleErrors();
 
-      // console.log(errores)
-
-      if (errores == false) {
+      if (errores == false && existeUsuario == true) {
         crearLocalStorage(datosForm.nombre);
       }
+
+      if (existeUsuario == false) {
+        errorPersonalizado("Credenciales inválidas")
+      }
+
+      // console.log(existeUsuario)
+
     }, 2000);
   };
 

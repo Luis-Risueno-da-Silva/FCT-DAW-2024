@@ -52,6 +52,7 @@ const Menu = () => {
                 </Link>
               </li>
 
+              {/* Si el usuario inició sesión */}
               {dataLocalStorage ? (
                 <li className="nav-item">
                   {/* Para ir a Buscar Usuarios */}
@@ -64,6 +65,13 @@ const Menu = () => {
                   {/* Para ir al perfil del usuario */}
                   <Link to={"/usuario"} className="nav_item_style me-5">
                     <i className="bi bi-person-fill"></i> {dataLocalStorage}
+                  </Link>
+
+                  <br className="ocultar" />
+
+                  {/* Para ir a la configuración del usuario */}
+                  <Link to={"/configuracion"} className="nav_item_style me-5">
+                    <i className="bi bi-gear"></i> Configuración
                   </Link>
 
                   <br className="ocultar" />
